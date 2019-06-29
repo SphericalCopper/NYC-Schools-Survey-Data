@@ -1,0 +1,168 @@
+---
+title: "Exploring Survey Data on NYC Schools"
+output: html_notebook
+---
+
+Over the course of this project, survey data from NYC school departments will be analyzed to gain insight as to whether parent, teacher, and student perceptions of the following factors appear related to average school SAT scores:
+
+1. Safety
+2. Engagement
+3. Communication
+4. Academics
+
+In other words, we're looking for whether perception of a school's standing in the above 4 factors play any significant bearing on the academic success of its students (SAT scores will be the metric through which academic success is measured). 
+
+In addition to that, we'll also delve into how the perceptions of students, parents, and teachers differ based on the above 4 metrics.
+
+The data is publicly available and [can be found here](https://data.cityofnewyork.us/Education/2011-NYC-School-Survey/mnz3-dyi8).
+
+We will begin by importing the libraries that will be needed in this project:
+
+
+```{r}
+library(readr)
+library(dplyr)
+library(stringr)
+library(purrr)
+library(tidyr)
+library(ggplot2)
+
+```
+The following files will be imported from their existing csv and tsv formats:
+
+```{r}
+combined <- read_csv("combined.csv")
+head(combined)
+```
+```{r}
+survey <- read_tsv("masterfile11_gened_final.txt")
+
+survey75 <- read_tsv("masterfile11_d75_final.txt")
+
+head(survey)
+head(survey75)
+```
+## Brief Overview of dataframes
+The "survey" dataframe contains data from "general education" schools, i.e. schools that do not specifically cater to students with special needs. The "survey75" dataframe contains data from "District 75" schools, which provide special education support for children with special needs such as learning or physical disabilities. 
+
+
+# Data Cleaning and Filtering:
+
+SATs are only taken by high school students, so it makes sense to select only rows that have data for High Schools.
+```{r}
+colnames(survey75)
+```
+Judging from the Data Dictionary, and the above column names, only data from "dbn" column to "aca_tot_11" columns will be needed for both survey and survey 75 tables.
+```{r}
+survey <- survey %>% filter(schooltype == "High School") %>% select("dbn":"aca_tot_11")
+
+survey75 <- survey75 %>% select("dbn":"aca_tot_11")
+
+head(survey)
+head(survey75)
+```
+# Merging Tables
+
+The above two columns can be combined into one. Since they largely share the same columns, the `bind_row` function will be used.
+```{r}
+survey_total <- survey %>% bind_rows(survey75)
+head(survey_total)
+
+```
+
+This table then needs to be merged with the pre-existing "combined" table that was imported. Since we're concerned with the relationship of the survey data with the variables in the "combined" dataframe, it makes sense to use a `left_join`. Additionally, the "dbn" column above needs to be renamed "DBN" so we can merge the tables on that column. 
+
+```{r}
+survey_total <- survey_total %>% rename(DBN = dbn)
+
+survey_combined <- combined %>% left_join(survey_total, by = "DBN")
+
+head(survey_combined)
+```
+## Using a Correlation Matrix to pinpoint strongly correlated factors
+
+To get an idea of which demographic and test score variables may be related to parent, teacher, and student perceptions of NYC school quality, a correlation matrix can be used to look for notable correlations.
+
+```{r}
+cor_mat <- survey_combined %>% select(avg_sat_score, saf_p_11:aca_tot_11) %>%
+  cor(use = "pairwise.complete.obs")
+
+cor_tib <- cor_mat %>% as_tibble(rownames = "variable")
+
+cor_tib
+```
+Only the first two columns, "variable" and "avg_sat_score" will be selected for comparison, and correlations above 0.25 or below -0.25 will be looked for.
+
+```{r}
+cor_tib <- cor_tib %>% select(variable, avg_sat_score) %>% filter(avg_sat_score < -0.25 | avg_sat_score > 0.25)
+
+cor_tib
+```
+
+ Next, Scatter Plots will be constructed to better visualize the relationship of each of the 4 correlated variables to "avg_sat_score".
+
+```{r}
+create_scatter <- function(x,y){
+  ggplot(data = survey_combined) + aes_string(x = x, y = y) + geom_point(alpha = 0.3) + theme(panel.background = element_rect(fill = "white"))
+}
+
+x_variables <- cor_tib$variable[2:5]
+y_variables <- "avg_sat_score"
+
+map2(x_variables, y_variables, create_scatter)
+```
+
+## Reshaping Tibble to visualize differences in perceptions of Students, Teachers, and Parents
+
+While all 4 variables appear correlated with "avg_sat_score", the relationships are different. It might be better to visualize how similarly or differently parents, teachers, and students perceive how well their school does in each of the 4 metrics.
+
+For this, the "survey_combined" dataframe will have to be mutated to include metrics in a column.
+
+A key-value pair will be used to re-shape survey_combined appropriately.
+
+```{r}
+colnames(survey_combined)
+```
+```{r}
+survey_combined2 <- survey_combined %>%                         
+  gather(key = "survey_question", value = score, saf_p_11:aca_tot_11)
+
+head(survey_combined2)
+```
+
+From the above dataframe, the "response_type" (student, teacher, or parent), as well as the question can be extracted from the data available in the survey_question column.
+
+```{r}
+survey_combined2 <- survey_combined2 %>% mutate(response_type = str_sub(survey_question, 4, 6), question = str_sub(survey_question, 1, 3))
+
+head(survey_combined2)
+```
+Now, if_else functions will be used to replace the values in the response_type with a more appropriate value.
+
+For instance, _p_ will be replaced with "parent" and _t_ with "teacher".
+
+```{r}
+survey_combined2 <- survey_combined2 %>% mutate(response_type = ifelse(response_type  == "_p_", "parent", 
+                                ifelse(response_type == "_t_", "teacher",
+                                       ifelse(response_type == "_s_", "student", 
+                                              ifelse(response_type == "_to", "total", "NA")))))
+
+head(survey_combined2)
+  
+```
+
+Boxplots will be used to visualize differences in perceptions of the the student, parent, and teacher groups. The rows for which "response_type" is "total" will be removed. 
+
+```{r}
+survey_combined2 <- survey_combined2 %>% filter(response_type != "total")
+
+ggplot(survey_combined2) + aes(x = question, y = score, fill = response_type) + geom_boxplot() + theme(panel.background = element_rect(fill = "white"))
+  
+```
+# Conclusions
+
+One trend consistently observed across all 4 variables is that parents have the most favorable perceptions, and students have the least favorable perceptions. For parents, the variable most strongly correlated with SAT scores is the category of "Safety and Respect". 
+
+For students and teachers, the category best correlated with SAT scores is their perception of a school's Academic prowess. This makes sense, as since students and teachers come from the school environment, they probably have more information on the academic standings as which school, thus they're able to give more informed opinions when asked to score schools by their perception of said schools' academic prowess.
+
+The earlier scatter plots also illustrated to us that the perception of Safety by students and teachers appears noticeably correlated to SAT scores. The perception of a school's academic standing by students is also another factor that corresponds positively to a school's average SAT scores.
