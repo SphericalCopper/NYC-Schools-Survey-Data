@@ -8,3 +8,5 @@ We also investigated how these 3 groups of surveyed people differed in their per
 1. Open the `NYCSchoolsPerception.Rmd` in RStudio
 2. Run all (Ctrl+Alt+r)
 3. Knit to HTML (Ctrl+Shift+k)
+
+*readme.md under construction*
