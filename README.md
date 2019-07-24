@@ -53,3 +53,51 @@ For students and teachers, the category best correlated with SAT scores is their
 
 
 ## 2) [Analyzing relationships between SAT Scores and Demographic Factors](https://github.com/SphericalSilver/NYC-Schools-Survey-Data/blob/master/Relationship%2Bbetween%2BDemographic%2BFactors%2Band%2BSAT%2Bscores%2Bof%2BNYC%2BHigh%2BSchools.ipynb)
+
+In this part of the project, the same datasets were investigated. Python was used analyze and then draw relationships between the average SAT score of a school, and its various demographic factors.
+
+### Preparing both datasets
+
+- First both datasets were cleaned so they could be merged on a unique column. This involved having to standardize the `dbn` column, which required things like:
+ - Lower-casing the column name
+ - Padding the number of digits in the column values so they were the same
+ 
+- Latitude and Longitude columns were also cleaned, since we were interested in physical locations. This entailed:
+ - Acquiring the column containing the latitude and longtitude, and splitting it appropriately.
+ - Using regex to derive the latitude and longitude, and assigning them to new columns.
+ - Converting the columns to the numeric type.
+ 
+- Filtered Datasets to include only students from grades 9-12, then combined both datasets on the `dbn` column after it was standardized.
+
+### Analysis
+
+A correlation matrix between the average SAT score and other variables was constructed and visualized.
+
+![correlation matrix variables python](https://i.gyazo.com/472540ee294a20cd2cae2465da05a267.png)
+
+Perceptions of academic success by students and teachers both correlated well with SAT scores. Perceptions of Safety are also correlated with SAT scores by these two groups. 
+
+#### Scatter Plots to visualize correlation of SATs with School Safety Perception
+
+We constructed Scatter Plots to investigate the correlation with safety further:
+
+![scatter plot safety](https://i.gyazo.com/012c493ce0ea86459893b18900d9ee01.png)
+
+In general, there is a fair correlation with safety perceptions of students, and the average SAT score. This trend mostly holds true, except for 5 anomalous cases of schools with safety scores of more than 8, but average SAT scores of less than 1500. All schools with average SAT scores of 1600 or more had a safety score of more than 6.5.
+
+#### Safety Scores by District
+
+We then grouped safety scores by district, aggregating them by the mean safety score, and then visualized this on a map of NYC:
+
+![NYC safety score map](https://i.gyazo.com/fc40a840bce4fedf207dc53889cf977d.png)
+
+Green spots indicate lower safety scores, and yellow spots indicate higher safety scores.
+
+From the map of NYC, it looks like Manhattan and the Bronx tend to have higher safety scores, whereas Brooklyn has lower safety scores.
+
+#### Racial Differences 
+
+![race SATs](https://i.gyazo.com/5dbbf0fdd347dd3c78e2a92cbfa5d141.png)
+
+Schools with higher proportions of Asians and White students have higher SAT scores on average, whereas those with higher Black and Hispanic students perform more poorly. This is most likely correlated to socioeconomic factors that also happen to correlate to race. For instance, black and hispanic families tend to do less well financially.
+
