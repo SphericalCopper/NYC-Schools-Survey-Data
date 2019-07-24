@@ -101,3 +101,4 @@ From the map of NYC, it looks like Manhattan and the Bronx tend to have higher s
 
 Schools with higher proportions of Asians and White students have higher SAT scores on average, whereas those with higher Black and Hispanic students perform more poorly. This is most likely correlated to socioeconomic factors that also happen to correlate to race. For instance, black and hispanic families tend to do less well financially.
 
+Further Analysis was also done in the project on SAT score differences based on gender proportion, as well as the frequency of Advanced Placement exam taking rates.
