@@ -87,7 +87,7 @@ In general, there is a fair correlation with safety perceptions of students, and
 
 #### Safety Scores by District
 
-We then grouped safety scores by district, aggregating them by the mean safety score, and then visualized this on a map of NYC:
+We then grouped safety scores by district, aggregating them by the mean safety score, and then visualized this on a map of NYC, using the `mpl_toolkits.basemap` library:
 
 ![NYC safety score map](https://i.gyazo.com/fc40a840bce4fedf207dc53889cf977d.png)
 
