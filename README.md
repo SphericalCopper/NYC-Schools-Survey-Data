@@ -49,7 +49,7 @@ After the re-shaping, columns were renamed to more readily represent the respone
 
 One trend consistently observed across all 4 variables is that parents have the most favorable perceptions, and students have the least favorable perceptions. For parents, the variable most strongly correlated with SAT scores is the category of “Safety and Respect”.
 
-For students and teachers, the category best correlated with SAT scores is their perception of a school’s Academic prowess. This makes sense, as since students and teachers come from the school environment, they probably have more information on the academic standings as which school, thus they’re able to give more informed opinions when asked to score schools by their perception of said schools’ academic prowess.
+For students and teachers, the category best correlated with SAT scores is their perception of a school’s Academic prowess. This makes sense, as since students and teachers come from the school environment, **they probably have more information on the academic standings as which school, thus they’re able to give more informed opinions when asked to score schools by their perception of said schools’ academic prowess.**
 
 
 ## 2) [Analyzing relationships between SAT Scores and Demographic Factors](https://github.com/SphericalSilver/NYC-Schools-Survey-Data/blob/master/Relationship%2Bbetween%2BDemographic%2BFactors%2Band%2BSAT%2Bscores%2Bof%2BNYC%2BHigh%2BSchools.ipynb)
@@ -83,7 +83,7 @@ We constructed Scatter Plots to investigate the correlation with safety further:
 
 ![scatter plot safety](https://i.gyazo.com/012c493ce0ea86459893b18900d9ee01.png)
 
-In general, there is a fair correlation with safety perceptions of students, and the average SAT score. This trend mostly holds true, except for 5 anomalous cases of schools with safety scores of more than 8, but average SAT scores of less than 1500. All schools with average SAT scores of 1600 or more had a safety score of more than 6.5.
+In general, there is a fair correlation with safety perceptions of students, and the average SAT score. This trend mostly holds true, except for 5 anomalous cases of schools with safety scores of more than 8, but average SAT scores of less than 1500. **Note that all schools with average SAT scores of 1600 or more had a safety score of more than 6.5.**
 
 #### Safety Scores by District
 
@@ -99,6 +99,6 @@ From the map of NYC, it looks like Manhattan and the Bronx tend to have higher s
 
 ![race SATs](https://i.gyazo.com/5dbbf0fdd347dd3c78e2a92cbfa5d141.png)
 
-Schools with higher proportions of Asians and White students have higher SAT scores on average, whereas those with higher Black and Hispanic students perform more poorly. This is most likely correlated to socioeconomic factors that also happen to correlate to race. For instance, black and hispanic families tend to do less well financially.
+Schools with higher proportions of Asians and White students have higher SAT scores on average, whereas those with higher Black and Hispanic students perform more poorly. **This is most likely correlated to socioeconomic factors that also happen to correlate to race. For instance, black and hispanic families tend to do less well financially.**
 
 Further Analysis was also done in the project on SAT score differences based on gender proportion, as well as the frequency of Advanced Placement exam taking rates.
