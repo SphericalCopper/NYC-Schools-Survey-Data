@@ -5,7 +5,7 @@ Data taken from surveys was used to investigate as to whether the perceptions of
 We also investigated how these 3 groups of surveyed people differed in their perceptions. Relationships between SAT scores and a school's various demographic factors were also explored.
 
 
-# 1) [Investigation of the link between the perception of a school, and the academic success of its students, using R](https://github.com/SphericalSilver/NYC-Schools-Survey-Data/blob/master/NYCSchoolsPerception.Rmd)
+# 1) [Link between perception of a school, and academic success of its students, using R](https://github.com/SphericalSilver/NYC-Schools-Survey-Data/blob/master/NYCSchoolsPerception.Rmd)
 
 Data used in this project (including the data dictionary) was publically available and [can be found here](https://data.cityofnewyork.us/Education/2011-NYC-School-Survey/mnz3-dyi8).
 
@@ -32,20 +32,20 @@ We are also categorizing the survey respondents into 3 categories - 1) Students,
 - To get an idea of which demographic and test score variables may be related to parent, teacher, and student perceptions of NYC school quality, a correlation matrix was used to look for notable correlations.
  - Only correlation values above 0.25 or below -0.25 were looked at because these represent note-worthy positive or negative correlation values.
  
-[correlation matrix](https://i.gyazo.com/81feb730117d8be2f22119fd45ea8650.png)
+![correlation matrix](https://i.gyazo.com/81feb730117d8be2f22119fd45ea8650.png)
  
 ## Scatter Plot visualization of variable correlations
 Scatter Plots were constructed to visualize the relationships of the 4 variables seen in the correlation matrix above with average SAT score.
  
 To analyze how Students, Teachers, and Parents *differed* in their perceptions, the tibble was re-shaped using a key-value pair like so: 
 
-[img]https://i.gyazo.com/ed388245d890de5573ff924b6f686ae8.png[/img]
+![key-value reshape](https://i.gyazo.com/ed388245d890de5573ff924b6f686ae8.png)
 
 After the re-shaping, columns were renamed to more readily represent the respone type (i.e. which category of person it came from).
 
 ## Box Plot visualizations of differences in perceptions between the 3 groups
 
-[Box Plot Perception Comparison](https://i.gyazo.com/6fde6fd8b6786408817570196e61e455.png)
+![Box Plot Perception Comparison](https://i.gyazo.com/6fde6fd8b6786408817570196e61e455.png)
 
 One trend consistently observed across all 4 variables is that parents have the most favorable perceptions, and students have the least favorable perceptions. For parents, the variable most strongly correlated with SAT scores is the category of “Safety and Respect”.
 
