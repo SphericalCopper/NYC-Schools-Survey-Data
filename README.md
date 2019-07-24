@@ -59,13 +59,13 @@ In this part of the project, the same datasets were investigated. Python was use
 ### Preparing both datasets
 
 - First both datasets were cleaned so they could be merged on a unique column. This involved having to standardize the `dbn` column, which required things like:
- - Lower-casing the column name
- - Padding the number of digits in the column values so they were the same
+  - Lower-casing the column name
+  - Padding the number of digits in the column values so they were the same
  
 - Latitude and Longitude columns were also cleaned, since we were interested in physical locations. This entailed:
- - Acquiring the column containing the latitude and longtitude, and splitting it appropriately.
- - Using regex to derive the latitude and longitude, and assigning them to new columns.
- - Converting the columns to the numeric type.
+  - Acquiring the column containing the latitude and longtitude, and splitting it appropriately.
+  - Using regex to derive the latitude and longitude, and assigning them to new columns.
+  - Converting the columns to the numeric type.
  
 - Filtered Datasets to include only students from grades 9-12, then combined both datasets on the `dbn` column after it was standardized.
 
